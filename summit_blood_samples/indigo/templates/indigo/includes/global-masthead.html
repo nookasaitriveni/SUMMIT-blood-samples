@@ -1,0 +1,38 @@
+<div class="masthead">
+
+  <div class="wrapper clearfix">
+
+    <div class="masthead__search" >
+      {% if user.is_authenticated %}
+        <h4 class="blood_sample__userinfo">Hi {{ user.username }}! <a href="{% url 'logout' %}">logout</a></h4>
+
+      {% else %}
+      <h4 class="blood_sample__userinfo">You are not logged in <a href="{% url 'login' %}">login</a></h4>
+      {% endif %}
+        {% comment %} <div class="search-form">
+          <input type="search" placeholder="Search UCL websites" class="search-form__input search-form__input--search" value="">
+        </div> {% endcomment %}
+        {% comment %} <input type="hidden" name="collection" value="website-meta">
+        <input type="hidden" name="profile" value="_website">
+        <input type="hidden" name="tab" value="websites"> {% endcomment %}
+        {% comment %} <a href="{% url 'login' %}" name="button" value="Login" class="btn btn--primary search-form__input search-form__input--submit" />Login</a> {% endcomment %}
+    </div>
+
+    <nav class="masthead__nav m-clear">
+      <ul class="masthead__list">
+        <li class="masthead__item"><a href="/" class="masthead__link">UCL Home</a>
+        </li>
+        <li class="masthead__item"><a href="/admin/auth/user/" target="_blank" class="masthead__link">Manage Users</a>
+        </li>
+        {% comment %} <li class="masthead__item"><a href="//www.ucl.ac.uk/prospective-students" class="masthead__link">Prospective students</a>
+        </li>
+        <li class="masthead__item"><a href="//www.ucl.ac.uk/students" class="masthead__link">Current students</a>
+        </li>
+        <li class="masthead__item"><a href="//www.ucl.ac.uk/staff" class="masthead__link">Staff</a>
+        </li> {% endcomment %}
+      </ul>
+    </nav>
+
+  </div>
+
+</div><!-- end .masthead -->

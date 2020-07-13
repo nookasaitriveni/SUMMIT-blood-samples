@@ -1,0 +1,2 @@
+// To load the initial fixture use below command
+// manage.py loaddata fixtures.json
