@@ -1,0 +1,28 @@
+<div class="modal fade" id="addDepartmentModal" style="margin-left: -16px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Department</h4>
+      </div>
+      <div class="modal-body">
+        {{ add_department_form.as_p }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" name="btnAddDepartmentModal" class="btn bg-red-gradient" id="adddepartment">Add</button>
+        <button type="button" name="btnCancelModal" class="btn bg-aqua-gradient" data-dismiss="modal">No</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $("#addDepartmentModal").submit(function () {
+      $("#adddepartment").attr("disabled", true);
+      return true;
+  });
+  </script>
+  <style>
+  #adddepartment:disabled{
+      background: #a0a0a0;
+  }
+  </style>
