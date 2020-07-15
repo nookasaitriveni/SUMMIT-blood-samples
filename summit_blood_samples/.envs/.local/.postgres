@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=summit_blood_samples
+POSTGRES_USER=MpSLyYyubmawjJIPcdhAqbWeWoUSCsfB
+POSTGRES_PASSWORD=kF7ghMAXm4NX1ZubC6qT57ggYLXl3vEYmQU8xXYKLOATGWMZvv8CZyHDATHIZPqm

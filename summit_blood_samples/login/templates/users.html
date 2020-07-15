@@ -1,0 +1,198 @@
+<section class="content-header" style="width: 80%; margin: 0 auto; padding-top: 70px;">
+    <h3 class="title">Manage Users</h3>
+</section>
+{% comment %} {% include 'messages.html' %} {% endcomment %}
+<section class="content" style="width: 80%; margin: 0 auto; padding-top: 20px;">
+    <div class="row">
+        <div class="col-md-12" style="padding-left: 0;">
+            <div class="box box-warning">
+                <div class="box-header">
+                    <button type="button" class="btn btn-success" id="AddUserButton" name="btnAddUser">Add</button>
+                    <button type="button" class="btn btn-danger" name="btnDeleteUser" disabled="disabled">Delete</button>
+                    <div class="box-tools pull-right">
+                        <form role="form" aria-labeldby="form" class="form-inline" method="get" action="" autocomplete="off" style="margin-top: 7px;">
+                            {# csrf_token #}
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                              <input type="text" name="search" class="form-control pull-right" placeholder="Search" id='search' style='height: 38px;'>
+                              <div class="input-group-btn">
+                                <button type="submit" class="btn bg-teal-gradient fbtn-default" name="btnSearch"><i class="fa fa-search"></i></button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table table-hover table-bordered dataTable" id="userListTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="check-all" value="all" class="minimal"></th>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>User Name</th>
+                                <th>Status</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr id="{{ user.user_id.id }}">
+                                    <td><input name="check-specific" value="{{ user.user_id.id }}" type="checkbox" class="minimal"></td>
+                                    <td>{{ forloop.counter|add:value }}.</td>
+                                    <td>{{ user.user_id.first_name }}</td>
+                                    <td>{{ user.user_id.last_name }}</td>
+                                    <td>{{ user.user_id.email }}</td>
+                                    <td>{{ user.user_id.username }}</td>
+                                    <td>{% if user.user_id.is_active %}Active{% else %} Inactive {% endif %}</td>
+                                    <td>{{ user.role_id.name }}</td>
+                                    <td>
+                                        <a href="#" class="custom-text-success btnEditUser btn btn-soft-amber btn-sm" title="Edit the user" data-toggle="tooltip" data-value="{{ user.id }}">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        {% if user.user.is_active %}
+                                            <a href="#" class="custom-text-warning btnBlockUser btn btn-soft-red btn-sm" data-toggle="tooltip" title="Block the user" data-value="{{ user.id }}">
+                                                <i class="fa fa-lock"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="#" class="custom-text-success btnUnblockUser btn btn-soft-green btn-sm" data-toggle="tooltip" title="Unblock the user" data-value="{{ user.id }}">
+                                                <i class="fa fa-unlock"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="#" class="custom-text-danger btnDeleteUser btn btn-soft-red btn-sm" title="Delete the user" data-toggle="tooltip" data-value="{{ user.id }}">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr class="no-record">
+                                    <td colspan="9">No Record(s)</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <ul id="pagination_user" class="pagination-md pull-right" data-value="user"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'addUserModal.html' %}
+{% include 'editUserModal.html' %}
+{% include 'deleteConfirmationModal.html' %}
+{% include 'blockConfirmationModal.html' %}
+{% include 'unblockConfirmationModal.html' %}
+<style>
+.page.active {
+  display: block;
+}
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.page.active a {
+  background-color: #11d0ae;
+  color: white;
+}
+.pagination li.prev a:hover {
+  background-color: #11d0ae;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.first a:hover {
+  background-color: #11d0ae;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.page a:hover {
+  background-color: #11d0ae;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.next a:hover {
+  background-color: #11d0ae;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.last a:hover {
+  background-color: #11d0ae;
+  color: white;
+  transition: background-color .3s;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+
+<script>
+
+
+let searchParams = new URLSearchParams(window.location.search);
+if (searchParams.has('search')){
+    let param = searchParams.get('search')
+    $('#search').val(param);
+};
+
+var current_page = '{{ users.number }}'
+$('#pagination_user').twbsPagination({
+    totalPages: '{{ users.paginator.num_pages }}',
+    // the current page that show on start
+    startPage: parseInt(current_page),
+
+    // maximum visible pages
+    visiblePages: 7,
+
+    initiateStartPageClick: true,
+    // template for pagination links
+    href: false,
+
+    //This hides all control buttons if it has one page 
+    hideOnlyOnePage:true,
+    // variable name in href template for page number
+    hrefVariable: '{{ users.number }}',
+
+    // Text labels
+    first: 'First',
+    prev: 'Previous',
+    next: 'Next',
+    last: 'Last',
+
+    // carousel-style pagination
+    loop: false,
+    //onPageClick: null,
+    // callback function
+    onPageClick: function (event, page) {
+        $('.page-active').removeClass('page-active');
+        $('#page'+page).addClass('page-active');
+        $('.loader').show();
+        var that = $(this);
+        var t;
+
+        if (page != {{ users.number }}){
+            if (searchParams.has('search')){
+                let param = searchParams.get('search')
+                window.location.href = '/ManageUsers/?page='+page+'&search='+param;
+            }else{
+                window.location.href = '/ManageUsers/?page='+page;
+            }
+        }
+    },
+
+    // pagination Classes
+    paginationClass: 'pagination',
+    nextClass: 'next',
+    prevClass: 'prev',
+    lastClass: 'last',
+    firstClass: 'first',
+    pageClass: 'page',
+    activeClass: 'active',
+    disabledClass: 'disabled'
+
+});
+$('#page'+'{{ users.number }}').addClass('page-active');
+
+</script>
