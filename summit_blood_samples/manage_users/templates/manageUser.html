@@ -6,8 +6,6 @@
 {% user_is_entry_admin_tag user as admin%}
 {% if admin %}
     {% include 'users.html' %}
-    {% else %}
-<h4 class="">You are not logged in <a href="{% url 'manage_users' %}">login</a></h4>
 {% endif %}
 <style>
     #userListTable_wrapper .row:nth-of-type(2){
