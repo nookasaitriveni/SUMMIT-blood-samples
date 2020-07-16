@@ -17,8 +17,11 @@ urlpatterns = [
     # path("users/", include("summit_blood_samples.users.urls", namespace="users")),
     # path("accounts/", include("allauth.urls")),
     # path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('hw.urls')),
     # path('manage_users/', include('login.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('blood_sample.urls')),
+    path('manage_users/', include('manage_users.urls')),
+    path('admin/', admin.site.urls),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

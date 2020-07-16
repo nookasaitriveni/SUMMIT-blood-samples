@@ -33,7 +33,7 @@ services:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
     ports:
-      - "5433:5432"
+      - "5433:5432" 
     env_file:
       - ./.envs/.local/.postgres
 
