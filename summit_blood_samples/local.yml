@@ -13,7 +13,6 @@ services:
     container_name: django
     depends_on:
       - postgres
-      - mailhog
     volumes:
       - .:/app
     env_file:
@@ -32,8 +31,6 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
-    ports:
-      - "5433:5432" 
     env_file:
       - ./.envs/.local/.postgres
 
@@ -51,9 +48,3 @@ services:
       - ./summit_blood_samples:/app/summit_blood_samples
     ports:
       - "7000:7000"
-
-  mailhog:
-    image: mailhog/mailhog:v1.0.0
-    container_name: mailhog
-    ports:
-      - "8025:8025"

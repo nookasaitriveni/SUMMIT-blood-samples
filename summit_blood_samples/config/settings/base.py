@@ -74,9 +74,6 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "summit_blood_samples.users.apps.UsersConfig",
-    "indigo",
-    "blood_sample",
-    "manage_users",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -280,7 +277,3 @@ REST_FRAMEWORK = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
-
-PAGINATION_PER_PAGE = 10

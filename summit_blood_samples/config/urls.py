@@ -7,28 +7,22 @@ from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    # path(
-    #     "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    # ),
+    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path(
+        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
+    ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    # path("users/", include("summit_blood_samples.users.urls", namespace="users")),
-    # path("accounts/", include("allauth.urls")),
-    # path('accounts/', include('django.contrib.auth.urls')),
-    # path('manage_users/', include('login.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('blood_sample.urls')),
-    path('manage_users/', include('manage_users.urls')),
-    path('admin/', admin.site.urls),
+    path("users/", include("summit_blood_samples.users.urls", namespace="users")),
+    path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")), 
+    path("api/", include("config.api_router")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]
