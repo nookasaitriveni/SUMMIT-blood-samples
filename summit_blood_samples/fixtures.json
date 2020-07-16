@@ -1,19 +1,19 @@
 [{
-        "model": "login.role",
+        "model": "manage_users.manageroles",
         "pk": 1,
         "fields": {
             "name": "Administrators"
         }
     },
     {
-        "model": "login.role",
+        "model": "manage_users.manageroles",
         "pk": 2,
         "fields": {
             "name": "Data Manager"
         }
     },
     {
-        "model": "login.role",
+        "model": "manage_users.manageroles",
         "pk": 3,
         "fields": {
             "name": "Blood Samples Manager"

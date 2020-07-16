@@ -1,0 +1,96 @@
+<form role="form" aria-labeledby="form" method="post" action="" id="editUserForm">
+    {% csrf_token %}
+    <div class="form-group">
+              {{addUserForm.first_name.errors}}
+              <label for="{{ addUserForm.first_name.id_for_label }}"> {{ addUserForm.first_name.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.first_name.name}}" id="{{addUserForm.first_name.id_for_label}}" required="required" placeholder="First Name" type="text" value="{{addUserForm.first_name.value}}">
+            </div>
+          <div class="form-group">
+              {{addUserForm.last_name.errors}}
+              <label for="{{ addUserForm.last_name.id_for_label }}"> {{ addUserForm.last_name.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.last_name.name}}" id="{{addUserForm.last_name.id_for_label}}" required="required" placeholder="Last Name" type="text" value="{{addUserForm.last_name.value}}">
+            </div>
+          <div class="form-group">
+              {{addUserForm.email.errors}}
+              <label for="{{ addUserForm.email.id_for_label }}"> {{ addUserForm.email.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.email.name}}" id="{{addUserForm.email.id_for_label}}" required="required" placeholder="Email" type="email" value="{{addUserForm.email.value}}">
+            <div class="form-group">
+              {{addUserForm.username.errors}}
+              <label for="{{ addUserForm.username.id_for_label }}"> {{ addUserForm.username.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.username.name}}" id="{{addUserForm.username.id_for_label}}" required="required" placeholder="Username" type="text" value="{{addUserForm.username.value}}">
+            </div>
+            <div class="form-group">
+              {{addUserForm.password.errors}}
+              <label for="{{ addUserForm.password.id_for_label }}"> {{ addUserForm.password.label_tag }}</label><span class="required"></span>
+              <input class="form-control" name="{{addUserForm.password.name}}" id="{{addUserForm.password.id_for_label}}" required="required" placeholder="Password" type="password">
+            </div>
+            <div class="form-group">
+              {{addUserForm.contact.errors}}
+              <label for="{{ addUserForm.contact.id_for_label }}"> {{ addUserForm.contact.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.contact.name}}" id="{{addUserForm.contact.id_for_label}}" required="required" placeholder="Contact NO." type="text" value="{{addUserForm.contact.value}}">
+            </div>
+            <div class="form-group">
+              {# ifequal request.user.groups.all.0.id 1 #}
+                <!--<div class="pull-right">-->
+                    <!--<a href="javascript:void(0);" class="addUserType"><i class="fa fa-plus"></i></a>-->
+                  <!--</div>-->
+              {# endifequal #}
+              {{addUserForm.user_type.errors}}
+              <label for="{{ addUserForm.user_type.id_for_label }}"> {{ addUserForm.user_type.label_tag }}</label><span class="required">*</span>
+              <div id="userTypeID">
+                {{ addUserForm.user_type}}
+              </div>
+            </div>
+            <div class="form-group">
+              {# ifequal request.user.groups.all.0.id 1 #}
+                <!--<div class="pull-right">-->
+                    <!--<a href="javascript:void(0);" class="addCompany"><i class="fa fa-plus"></i></a>-->
+                  <!--</div>-->
+              {# endifequal #}
+              {{addUserForm.company.errors}}
+              <label for="{{ addUserForm.company.id_for_label }}"> {{ addUserForm.company.label_tag }}</label><span class="required">*</span>
+              <div id="company">
+                {{ addUserForm.company }}
+              </div>
+            </div>
+            <div class="form-group">
+              {# ifequal request.user.groups.all.0.id 1 #}
+                <!--<div class="pull-right">-->
+                    <!--<a href="javascript:void(0);" class="addDepartment"><i class="fa fa-plus"></i></a>-->
+                  <!--</div>-->
+              {# endifequal #}
+              {{addUserForm.department.errors}}
+              <label for="{{ addUserForm.department.id_for_label }}"> {{ addUserForm.department.label_tag }}</label><span class="required">*</span>
+              <div id="department">
+                {{ addUserForm.department }}
+              </div>
+            </div>
+            <div class="form-group">
+              {# ifequal request.user.groups.all.0.id 1 #}
+                <!--<div class="pull-right">-->
+                    <!--<a href="javascript:void(0);" class="addGroup"><i class="fa fa-plus"></i></a>-->
+                  <!--</div>-->
+              {# endifequal #}
+              {{addUserForm.groups.errors}}
+              <label for="{{ addUserForm.groups.id_for_label }}"> {{ addUserForm.groups.label_tag }}</label>
+              <div id="group">
+                {{ addUserForm.groups }}
+              </div>
+            </div>
+            <div class="form-group">
+              {{addUserForm.manager.errors}}
+              <label for="{{ addUserForm.manager.id_for_label }}"> {{ addUserForm.manager.label_tag }}</label><span class="required">*</span>
+              <div id="manager">
+                {{ addUserForm.manager }}
+              </div>
+            </div>
+            <div class="form-group">
+              {{addUserForm.designation.errors}}
+              <label for="{{ addUserForm.designation.id_for_label }}"> {{ addUserForm.designation.label_tag }}</label><span class="required">*</span>
+              <input class="form-control" name="{{addUserForm.designation.name}}" id="{{addUserForm.designation.id_for_label}}" required="required" placeholder="Designation" type="text" value="{{addUserForm.designation.value}}">
+            </div>
+          </div>
+
+
+    </div>
+    </form>
