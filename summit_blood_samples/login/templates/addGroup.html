@@ -1,0 +1,30 @@
+<div class="modal fade" id="addGroupModal" style="margin-left: -16px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Team</h4>
+      </div>
+      <div class="modal-body">
+          <form method="post" action="" enctype="multipart/form-data" id="groupAddForm">
+              {{ add_group_form.as_p }}
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" name="btnAddGroupModal" class="btn bg-red-gradient" id="addgroup">Add</button>
+        <button type="button" name="btnCancelModal" class="btn bg-aqua-gradient" data-dismiss="modal">No</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $("#addGroupModal").submit(function () {
+      $("#addgroup").attr("disabled", true);
+      return true;
+  });
+  </script>
+  <style>
+  #addgroup:disabled{
+      background: #a0a0a0;
+  }
+  </style>

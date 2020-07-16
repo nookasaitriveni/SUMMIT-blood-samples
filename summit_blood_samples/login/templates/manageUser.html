@@ -1,0 +1,95 @@
+{% extends "indigo/template-horizontal-nav-one-col.html" %}
+{% load login %}
+
+
+{% block content %}
+{% user_is_entry_admin_tag user as admin%}
+{% if admin %}
+    {% include 'users.html' %}
+    {% else %}
+<h4 class="">You are not logged in <a href="{% url 'login' %}">login</a></h4>
+{% endif %}
+<style>
+    #userListTable_wrapper .row:nth-of-type(2){
+        width: 100%;
+    }
+</style>
+
+{% endblock content %}
+{% block customscripts %}
+
+<script>
+        $(document).ready(function(){
+            $('button[name="btnAddUser"]').click(function(){
+                $('#addUserModal').appendTo("body").modal('show');
+                $('#addUserModal').modal({
+                    backdrop: 'static'
+                });
+                setTimeout(function() { $("#id_first_name").focus() }, 500);
+            });
+            $('button[name="btnAddUserModal"]').click(function(e){
+                $('.callout-custom').remove();
+                e.preventDefault();
+                var form = $('#addUserForm')[0];
+                var formData = new FormData(form);
+                formData.append('company_department', JSON.stringify(company_department_map));
+                $.ajax({
+                    url: '/ManageUsers/',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    /*statusCode: {
+                        500: function(xhr){
+                            $('#addUserModal .modal-title').text('Server Error');
+                            $('#addUserModal .modal-body').html('Something went wrong');
+                            $('#addUserModal .modal-footer').html('<button type="button" class="btn bg-red-gradient" name="btnUnAuth">OK</button>');
+                        }
+                    },*/
+                    success: function(response){
+                        if(response.status == '0')
+                        {
+                            if (response.msg != '<div class="callout callout-danger lead callout-custom">All fields are mandatory.</div>'){
+                                $('#addUserForm').before(response.msg);
+                            }
+                            $.each(response.error_data, function(index, data){
+                                //document.querySelector("label[for=id_"+index+"]").before('<div style="margin:0px; padding:0px;" class="callout callout-danger lead callout-custom callout-inside">'+data+'</div>');;
+                                $('#id_'+index).closest(".form-group").prepend('<div style="margin:0px; padding:0px;margin-bottom: -14px;" class="callout callout-danger lead callout-custom callout-inside">'+data+'</div>');
+                                //$('input[name="'+index+'"], select[name="'+index+'"]').each(function(){
+                                //    $(this).prev('label').before('<div style="margin:0px; padding:0px;" class="callout callout-danger lead callout-custom callout-inside">'+data+'</div>');
+                                //});
+                            });
+                        }
+                        else if(response.status == '1')
+                        {
+                            location.reload();
+                            var tableBody = $('#userListTable tbody');
+                            tableBody.find('tr.no-record').remove();
+                            if(response.details.created_by != undefined){
+                            var txt = '<tr><td>'+response.details.checkbox+'</td><td>'+(tableBody.find('tr').length + 1)+'</td><td>'+response.details.name+'</td><td>'+response.details.email+'</td><td>'+response.details.contact+'</td><td>'+response.details.status+'</td><td>'+response.details.role+'</td><td>'+response.details.failed+'</td><td>'+response.created_by+'</td><td>'+response.details.date+'</td><td>'+response.details.action+'</td></tr>';
+                            }
+                            else{
+                                if(response.details.created_by != undefined){
+                            var txt = '<tr><td>'+response.details.checkbox+'</td><td>'+(tableBody.find('tr').length + 1)+'</td><td>'+response.details.name+'</td><td>'+response.details.email+'</td><td>'+response.details.contact+'</td><td>'+response.details.status+'</td><td>'+response.details.role+'</td><td>'+response.details.failed+'</td><td>'+response.details.date+'</td><td>'+response.details.action+'</td></tr>';
+                            }
+                            }
+                            tableBody.append(txt);
+                            $('#addUserModal').modal('hide');
+                            form.reset();
+                            $('.content').prepend(response.msg);
+                            $('[data-toggle="tooltip"]').tooltip();
+                            deleteEnableDisable();
+                        }
+                    },
+                });
+            });
+            $('button[name="btnCancelModal"]').click(function(e){
+                location.reload();
+            });
+        });
+
+    </script>
+
+
+{% endblock customscripts %}
+

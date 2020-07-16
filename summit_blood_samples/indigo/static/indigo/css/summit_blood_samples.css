@@ -1,0 +1,12 @@
+.blood_sample__userinfo {
+    float: right !important;
+    text-transform: none;
+}
+
+#myTab {
+    margin-left: 0px !important;
+}
+
+.nav.nav-tabs {
+    margin-left: 0px !important;
+}
