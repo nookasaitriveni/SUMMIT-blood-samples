@@ -19,6 +19,8 @@ Application configuration files:
       # -----------------------------------------------
       USE_DOCKER=yes
       IPYTHONDIR=/app/.ipython
+      DJANGO_SETTINGS_MODULE=config.settings.production
+      DJANGO_SECRET_KEY=<super-secret-key>
 
 `$ vim summit_blood_samples/.envs/production/.postgres`  
 
