@@ -4,6 +4,7 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_traefik: {}
+  production_uploads: {}
 
 services:
   django:
@@ -13,10 +14,11 @@ services:
     image: summit_blood_samples_production_django
     depends_on:
       - postgres
-      - redis
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
+    volumes:
+      - production_uploads:/uploads
     command: /start
 
   postgres:
@@ -42,16 +44,3 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
-
-  redis:
-    image: redis:5.0
-
-  
-  awscli:
-    build:
-      context: .
-      dockerfile: ./compose/production/aws/Dockerfile
-    env_file:
-      - ./.envs/.production/.django
-    volumes:
-      - production_postgres_data_backups:/backups
