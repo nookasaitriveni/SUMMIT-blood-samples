@@ -1,10 +1,9 @@
-version: '3'
+version: '3.8'
 
 volumes:
-  production_postgres_data: {}
-  production_postgres_data_backups: {}
-  production_traefik: {}
-  production_uploads: {}
+  production_postgres_data:
+  production_postgres_data_backups:
+  production_traefik:
 
 services:
   django:
@@ -18,7 +17,9 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     volumes:
-      - production_uploads:/uploads
+      - type: bind
+        source: ./uploads
+        target: /uploads
     command: /start
 
   postgres:
@@ -27,8 +28,12 @@ services:
       dockerfile: ./compose/production/postgres/Dockerfile
     image: summit_blood_samples_production_postgres
     volumes:
-      - production_postgres_data:/var/lib/postgresql/data
-      - production_postgres_data_backups:/backups
+      - type: volume
+        source: production_postgres_data
+        target: /var/lib/postgresql/data
+      - type: volume
+        source: production_postgres_data_backups
+        target: /backups
     env_file:
       - ./.envs/.production/.postgres
 
@@ -40,7 +45,9 @@ services:
     depends_on:
       - django
     volumes:
-      - production_traefik:/etc/traefik/acme
+      - type: volume
+        source: production_traefik
+        target: /etc/traefik/acme
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"

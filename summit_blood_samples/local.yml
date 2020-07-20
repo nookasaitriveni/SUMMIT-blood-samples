@@ -1,8 +1,8 @@
-version: '3'
+version: '3.8'
 
 volumes:
-  local_postgres_data: {}
-  local_postgres_data_backups: {}
+  local_postgres_data:
+  local_postgres_data_backups:
 
 services:
   django:
@@ -15,6 +15,9 @@ services:
       - postgres
     volumes:
       - .:/app
+      - type: bind
+        source: ./uploads
+        target: /uploads
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
