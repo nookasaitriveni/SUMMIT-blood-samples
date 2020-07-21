@@ -5,26 +5,48 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
+from django.conf.urls import url
+import django.views.static
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from summit_blood_samples.views import *
+
+admin.autodiscover()
+admin.site.login = login_required(admin.site.login)
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
-    # Django Admin, use {% url 'admin:index' %}
-    path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    path("users/", include("summit_blood_samples.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
+    path('', include('blood_sample.urls')),
+    path('accounts/password_reset/', auth_views.PasswordResetView.as_view(
+        html_email_template_name='registration/html_password_reset_email.html',
+        subject_template_name='registration/forgot_password_subject.html'
+    )),
+    path('accounts/login/',
+         auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
+    url(r'accounts/reset/done/$', reset_password_done, name="reset_password_done"),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('admin/', admin.site.urls),
+    url(r'^static/(?P<path>.*)$', django.views.static.serve,
+        {'document_root': settings.STATIC_ROOT, 'show_indexes': settings.DEBUG})
+
+
+    # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    # path(
+    #     "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
+    # ),
+    # # Django Admin, use {% url 'admin:index' %}
+    # path(settings.ADMIN_URL, admin.site.urls),
+    # # User management
+    # path("users/", include("summit_blood_samples.users.urls", namespace="users")),
+    # path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
+    # path("api/", include("config.api_router")),
     # DRF auth token
-    path("auth-token/", obtain_auth_token),
+    # path("auth-token/", obtain_auth_token),
 ]
 
 if settings.DEBUG:

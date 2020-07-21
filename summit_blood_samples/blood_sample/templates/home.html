@@ -1,0 +1,47 @@
+{% extends "indigo/template-horizontal-nav-one-col.html" %}
+{% load blood_sample %}
+{% comment %} {% block breadcrumb_links %} <h2>Home</h2> {% endblock breadcrumb_links %} {% endcomment %}
+{% block page_title %}Welcome to UCL - Summit Blood Sample{% endblock page_title %}
+{% block content %}
+{% if user.is_authenticated %}
+{% user_is_entry_admin_tag user as admin %}
+{% user_is_entry_datamanager_tag user as datamanager %}
+{% user_is_entry_bloodsamplemanager_tag user as bloodsamplemanager %}
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+    {% if admin or datamanager %}
+      <a class="nav-item nav-link" id="nav-upload-tab" data-toggle="tab" href="#nav-upload" role="tab" aria-controls="nav-upload" aria-selected="false">Uploads</a>
+      <a class="nav-item nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab" aria-controls="nav-review" aria-selected="false">Review</a>
+    {% endif %}
+
+
+    <a class="nav-item nav-link" id="nav-download-tab" data-toggle="tab" href="#nav-download" role="tab" aria-controls="nav-download" aria-selected="false">Download</a>
+    <a class="nav-item nav-link" id="nav-report-tab" data-toggle="tab" href="#nav-report" role="tab" aria-controls="nav-report" aria-selected="false">Reports</a>
+    {% if admin %}
+    <a class="nav-item nav-link" href="{% url 'admin:auth_user_changelist' %}" aria-controls="nav-admin" aria-selected="false">User Management</a>
+    {% endif %}
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <h4 class="ml-5">Unresolved Days</h4>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">Day 1/1/2020 Site XYZ Room 1 Visit YX issue Lorum ipsum <a class="btn btn-sm btn-go">GO</a>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">Day 1/1/2020 Site XYZ Room 1 Visit YX issue Lorum ipsum <a class="btn btn-sm btn-go">GO</a>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">Day 1/1/2020 Site XYZ Room 1 Visit YX issue Lorum ipsum <a class="btn btn-sm btn-go">GO</a>
+      </li>
+    </ul>
+  </div>
+  <div class="tab-pane fade show" id="nav-upload" role="tabpanel" aria-labelledby="nav-upload-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-report" role="tabpanel" aria-labelledby="nav-report-tab">Comming Soon!</div>
+</div>
+{% else %}
+<h4 class="">You are not logged in <a href="{% url 'login' %}">login</a></h4>
+{% endif %}
+{% endblock content %}
