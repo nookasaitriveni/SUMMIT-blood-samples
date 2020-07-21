@@ -6,9 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
+from rest_framework.authtoken.models import Token
 
 User._meta.get_field('email')._unique = True
-# admin.site.unregister(Site)
+admin.site.unregister(Token)
+admin.site.unregister(Site)
 admin.site.unregister(Group)
 
 
