@@ -1,4 +1,4 @@
-# SUMMIT-blood-samples 
+# SUMMIT-blood-samples
 
 ## Deploy
 
@@ -42,3 +42,17 @@ Application configuration files:
 ### Clean up
 **NB: the *-v* option will remove all volumes as well**  
 `$ docker-compose -f production.yml down --remove-orphans  -v`
+
+-----
+## Intial setup
+`$ docker-compose -f local.yml run --rm django python manage.py makemigrations`
+
+`$ docker-compose -f local.yml run --rm django python manage.py migrate`
+
+`$ docker-compose -f local.yml run --rm django python manage.py createsuperuser`
+
+
+### Initial data
+In fixtures.json change the "domain": "127.0.0.1:8000" to your server IP 127.0.0.1:8000 or myproject.mydomain.com and run below command
+
+`$ docker-compose -f local.yml run --rm django python manage.py loaddata fixtures.json`
