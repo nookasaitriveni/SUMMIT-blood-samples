@@ -3,7 +3,6 @@ from django.contrib.auth.models import User, AbstractUser
 from django.conf import settings
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
-User._meta.get_field('email').blank = False
 
 
 class ManageRoles(models.Model):
