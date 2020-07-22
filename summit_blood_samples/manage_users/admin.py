@@ -9,8 +9,8 @@ from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
 from rest_framework.authtoken.models import Token
 from .models import ManageRoles, UserRoles  # Role, UserRoles, User
-User._meta.get_field('email')._unique = True
-User._meta.get_field('email').blank = False
+#User._meta.get_field('email')._unique = True
+#User._meta.get_field('email').blank = False
 admin.site.unregister(Site)
 admin.site.unregister(Group)
 
