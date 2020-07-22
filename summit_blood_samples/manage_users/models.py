@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+# from django.contrib.auth.models import AbstractUser, User
 from django.conf import settings
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
@@ -18,7 +18,7 @@ class ManageRoles(models.Model):
 
 class UserRoles(models.Model):
     user_id = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='UserRoles_user')
+        User, on_delete=models.CASCADE, related_name='UserRoles')
     role_id = models.ForeignKey(
         ManageRoles, on_delete=models.CASCADE, related_name='UserRoles_roles')
 
