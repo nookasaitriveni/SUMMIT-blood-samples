@@ -7,6 +7,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import Group
 from django.contrib.sites.models import Site
+from rest_framework.authtoken.models import Token
 from .models import ManageRoles, UserRoles  # Role, UserRoles, User
 User._meta.get_field('email')._unique = True
 User._meta.get_field('email').blank = False
@@ -16,7 +17,7 @@ admin.site.unregister(Group)
 # Unregister the provided model admin
 admin.site.unregister(User)
 
-
+admin.site.unregister(Token)
 # admin.site.register(ManageRoles)
 
 # admin.site.register(UserRoles)
