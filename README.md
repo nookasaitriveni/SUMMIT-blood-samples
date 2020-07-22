@@ -50,6 +50,9 @@ Application configuration files:
 `$ docker-compose -f local.yml run --rm django python manage.py migrate`
 
 `$ docker-compose -f local.yml run --rm django python manage.py createsuperuser`
+**NB: Once superuser is created need to add role to the created user in django admin
+
+`$ docker-compose -f local.yml run --rm django python manage.py collectstatic`
 
 
 ### Initial data
