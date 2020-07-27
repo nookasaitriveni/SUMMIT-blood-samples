@@ -1,0 +1,73 @@
+<div id="upload_manifest" class="site-content__main custom-modal-content">
+    <h3>1-Upload Manifest</h3>
+    <form method="POST" class="post-form custom-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="manifestfile">Please select xls (or) xlsx file: <abbr title="Required" style="color:#c71d1d">*</abbr></label>
+                <input type="file" class="form__control form-control-file" id="manifestfile" accept=".xlsx, .xls">
+                <label for="visit">Visit:</label>
+                <select name="visit" id="visit" class="form__control ">
+                    <option value="Y0">Y0</option>
+                    <option value="Y0+3M">Y0+3M</option>
+                    <option value="Y1">Y1</option>
+                    <option value="Y2">Y2</option>
+                </select>
+            </div>
+
+    </form>
+    <em class="error" id="error"></em>
+    <div class="text-right bottom-buttons">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-submit" id="manifestupload">Next</button>
+    </div>
+</div>
+<script>
+$('body').delegate('#manifestupload', 'click',function() {
+    $('.btn-cancel').prop("disabled", true);
+    $('.btn-submit').prop("disabled", true);
+    if ($('#manifestfile').prop('files').length ===0){
+        $('#error').html("Please upload a Manifest");
+        $('.btn-cancel').prop("disabled", false);
+        $('.btn-submit').prop("disabled", false);
+        return
+    }
+    var file_data = $('#manifestfile').prop('files')[0];
+    if (!['xlsx', 'xls'].includes(file_data.name.split('.').slice(-1)[0])){
+        $('.error').html("Please upload a Manifest with XLS format");
+        $('.btn-cancel').prop("disabled", false);
+        $('.btn-submit').prop("disabled", false);
+        return
+    }
+    $('.modal-loader').show();
+    var form_data = new FormData();
+    form_data.append('file', file_data);
+    form_data.append('visit', $('#visit').val());
+    $.ajax({
+        url: 'upload_manifest',
+        data: form_data,
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        beforeSend: function(xhr){
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        },
+        success: function(data){
+            if (data.status==undefined){
+                $('#upload_manifest').hide();
+                $('.confirm_popup').html('');
+                $('.modal-body').append(data);
+            }else{
+                message = data.message
+                $('#error').html(message);
+            }
+            $('.modal-loader').hide();
+        },
+        error: function (error) {
+            $('.modal-loader').hide();
+            $('#error').html("Internal server error encountered");
+        }
+    });
+    $('.btn-cancel').prop("disabled", false);
+    $('.btn-submit').prop("disabled", false);
+});
+</script>

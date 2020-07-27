@@ -1,0 +1,97 @@
+<div id="settings_blood_sample" class="site-content__main custom-modal-content">
+    <h3 >Settings Options</h3>
+    <form>
+        <ul style="list-style:none;">
+              <li >
+                  <label>Blood Samples</label>
+                  <ul style="list-style:none;">
+                      <li><input type="checkbox" id="BloodSample-CohortId" name="BloodSample" value="CohortId"> Cohort id</input></li>
+                      <li><input type="checkbox" id="BloodSample-AppointmentId" name="BloodSample" value="AppointmentId"> Appointment id</input></li>
+                      <li><input type="checkbox" id="BloodSample-Barcode" name="BloodSample" value="Barcode"> Barcode</input></li>
+                      <li><input type="checkbox" id="BloodSample-Comments" name="BloodSample" value="Comments"> Comments</input></li>
+                      <li><input type="checkbox" id="BloodSample-SiteNurseEmail" name="BloodSample" value="SiteNurseEmail"> Site nurse email</input></li>
+                      <li><input type="checkbox" id="BloodSample-CreatedAt" name="BloodSample" value="CreatedAt"> Appointment date</input></li>
+                      <li><input type="checkbox" id="BloodSample-State" name="BloodSample" value="State"> State</input></li>
+                  </ul>
+                </li>
+                <li>
+                  <label>Manifest</label>
+                  <ul style="list-style:none;">
+                      <li><input type="checkbox" id='Manifest-CohortId' name="Manifest" value="CohortId"> Cohort id</input></li>
+                      <li><input type="checkbox" id='Manifest-Barcode' name="Manifest" value="Barcode"> Barcode</input></li>
+                      <li><input type="checkbox" id='Manifest-Site' name="Manifest" value="Site"> Site</input></li>
+                      <li><input type="checkbox" id='Manifest-Visit' name="Manifest" value="Visit"> Visit</input></li>
+                      <li><input type="checkbox" id='Manifest-Room' name="Manifest" value="Room"> Room</input></li>
+                      <li><input type="checkbox" id='Manifest-CollectionDateTime' name="Manifest" value="CollectionDateTime"> Collection Date Time</input></li>
+                      <li><input type="checkbox" id="Manifest-Comments" name="Manifest" value="Comments"> Comments</input></li>
+                  </ul>
+                </li>
+                <li>
+                  <label>Receipt</label>
+                  <ul style="list-style:none;">
+                      <li><input type="checkbox" id='Receipt-Barcode' name="Receipt" value="Barcode"> Barcode</input></li>
+                      <li><input type="checkbox" id='Receipt-Clinic' name="Receipt" value="Clinic"> Clinic</input></li>
+                      <li><input type="checkbox" id='Receipt-DateTimeTaken' name="Receipt" value="DateTimeTaken"> Date Time Taken</input></li>
+                      <li><input type="checkbox" id='Receipt-SampleId' name="Receipt" value="SampleId"> Sample id</input></li>
+                      <li><input type="checkbox" id='Receipt-TissueSubType' name="Receipt" value="TissueSubType"> Tissue sub type</input></li>
+                      <li><input type="checkbox" id='Receipt-ReceivedDateTime' name="Receipt" value="ReceivedDateTime"> Received date time</input></li>
+                      <li><input type="checkbox" id='Receipt-Volume' name="Receipt" value="Volume"> Volume</input></li>
+                      <li><input type="checkbox" id='Receipt-VolumeUnit' name="Receipt" value="VolumeUnit"> Volume unit</input></li>
+                      <li><input type="checkbox" id='Receipt-Condition' name="Receipt" value="Condition"> Condition</input></li>
+                  </ul>
+                </li>
+                <li>    
+                  <label>Processed</label>
+                  <ul style="list-style:none;">
+                      <li><input type="checkbox" id='Processed-Barcode' name="Processed" value="Barcode"> Barcode</input></li>
+                      <li><input type="checkbox" id='Processed-ParentId' name="Processed" value="ParentId"> Parent id</input></li>
+                      <li><input type="checkbox" id='Processed-TissueSubType' name="Processed" value="TissueSubType"> Tissue sub type</input></li>
+                      <li><input type="checkbox" id='Processed-ReceivedDateTime' name="Processed" value="ReceivedDateTime"> Received date time</input></li>
+                      <li><input type="checkbox" id='Processed-ProcessedDateTime' name="Processed" value="ProcessedDateTime"> Processed date time</input></li>
+                      <li><input type="checkbox" id='Processed-Volume' name="Processed" value="Volume"> Volume</input></li>
+                      <li><input type="checkbox" id='Processed-VolumeUnit' name="Processed" value="VolumeUnit"> Volume unit</input></li>
+                      <li><input type="checkbox" id='Processed-NumberOfChildren' name="Processed" value="NumberOfChildren"> Number of children</input></li>
+                      <li><input type="checkbox" id='Processed-SiteHeld' name="Processed" value="SiteHeld"> Site held</input></li>
+                  </ul>
+              </li>
+          </ul>
+        <hr>
+    </form>
+    <em class="error"></em>
+    <div class="text-right bottom-buttons">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-submit" id="settings-submit">Submit</button>
+    </div>
+</div>
+
+<script>
+    $('body').delegate('#settings-submit', 'click',function() {
+        $('.modal-loader').show();
+        var bloodSamples = [];
+        $.each($("input[name='BloodSample']:checked"), function () {
+            bloodSamples.push($(this).val());
+            
+        });
+        var manifest = [];
+        $.each($("input[name='Manifest']:checked"), function () {
+            manifest.push($(this).val());
+        });
+        var receipt = [];
+        $.each($("input[name='Receipt']:checked"), function () {
+            receipt.push($(this).val());
+        });
+        var processed = [];
+        $.each($("input[name='Processed']:checked"), function () {
+            processed.push($(this).val());
+        });
+        $.ajax({
+            url: '/download_blood_sample?BloodSample=' + bloodSamples+'&Manifest=' + manifest+'&Receipt=' + receipt+'&Processed=' + processed,
+            type: 'GET',
+            success: function(data){
+                $('.modal-loader').hide();
+                $("#blood-sample-modal").modal('toggle');
+                $('#DownloadContainer').html(data);
+            }
+        });
+    });
+    </script>

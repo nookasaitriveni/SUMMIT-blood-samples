@@ -66,6 +66,8 @@ class UserAdmin(admin.ModelAdmin):
         return UserRoles.objects.filter(user_id=obj.id).first()
     role.admin_order_field = 'role_id__name'
 
+    def has_delete_permission(self, request, obj=None):
+        return False
     # def save_model(self, request, obj, form, change):
     #     import ipdb;ipdb.set_trace()
     #     if form.data['email']=="":

@@ -76,9 +76,10 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     # "summit_blood_samples.users.apps.UsersConfig",
-    "indigo",
+    
     "manage_users",
     "blood_sample",
+    "indigo",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -164,6 +165,7 @@ MEDIA_ROOT = str(APPS_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
 
+UPLOAD_ROOT = str(ROOT_DIR / "uploads")
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates

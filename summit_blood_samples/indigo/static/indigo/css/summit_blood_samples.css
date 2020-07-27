@@ -195,8 +195,84 @@ button:focus {
     outline: none;
 }
 
+.btn {
+    text-align: center !important;
+}
+
 .btn-go {
     color: #fff !important;
+}
+
+.btn-cancel {}
+
+.btn-cancel:hover {
+    color: white;
+    background: rgb(97 89 87 / 0.5);
+    border: 1px solid rgb(176 172 171);
+}
+
+.btn-submit {
+    background: #609060;
+}
+
+.btn-submit:hover {
+    background: rgb(96 144 96 / 0.5);
+    color: white;
+    border: 1px solid rgb(173 199 176);
+}
+
+.bottom-buttons {
+    margin-top: 30px;
+}
+
+.custom-form {
+    margin-top: 25px;
+}
+
+.custom-modal-content {
+    margin-top: -45px;
+    padding: 20px 20px;
+}
+
+.download-table tbody tr:first-child {
+    background-color: #cecec6;
+    font-weight: bold;
+}
+
+.btn-svg {
+    width: 25px;
+    height: 25px;
+    color: rgb(97 89 87);
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0px 5px;
+}
+
+.btn-svg:hover {
+    color: rgb(97 89 87 / .6);
+}
+
+.custom-btn {
+    background: #607D8B;
+    text-align: center;
+    min-width: 138px;
+}
+
+.custom-btn:hover {
+    border: none;
+    color: white;
+    border: 1px transparent solid;
+}
+
+.custom-btn:disabled,
+.custom-btn:disabled:hover {
+    background-color: #999999;
+    border: none;
+    cursor: no-drop;
+}
+
+body.modal-open {
+    padding-right: 0px !important;
 }
 
 @media (min-width:990px) {

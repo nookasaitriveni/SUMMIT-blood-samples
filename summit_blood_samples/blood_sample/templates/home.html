@@ -1,6 +1,5 @@
 {% extends "indigo/template-horizontal-nav-one-col.html" %}
 {% load blood_sample %}
-{% comment %} {% block breadcrumb_links %} <h2>Home</h2> {% endblock breadcrumb_links %} {% endcomment %}
 {% block page_title %}Welcome to UCL - Summit Blood Sample{% endblock page_title %}
 {% block content %}
 {% if user.is_authenticated %}
@@ -36,12 +35,40 @@
       </li>
     </ul>
   </div>
-  <div class="tab-pane fade show" id="nav-upload" role="tabpanel" aria-labelledby="nav-upload-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-upload" role="tabpanel" aria-labelledby="nav-upload-tab">
+
+  <div id="upload-container">
+  </div>
+  </div>
   <div class="tab-pane fade show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">Comming Soon!</div>
-  <div class="tab-pane fade show" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">{% include 'download.html' %}</div>
   <div class="tab-pane fade show" id="nav-report" role="tabpanel" aria-labelledby="nav-report-tab">Comming Soon!</div>
 </div>
 {% else %}
 <h4 class="">You are not logged in <a href="{% url 'login' %}">login</a></h4>
 {% endif %}
+<script type="text/javascript">
+$(document).ready(function(){
+    getUpload();
+    function getUpload(day){
+        $('.modal-loader').show();
+        $.ajax({
+            url: '/upload?day='+day,
+            type: 'get',
+            success: function(data){
+                $('#upload-container').html(data);
+                $('.modal-loader').hide();
+            }
+        });
+    }
+    $('body').delegate('.day', 'click',function() {
+        $(".md-step").addClass("active");
+        $(this).removeClass("active");
+        getUpload($(this).data('currentday'));
+
+   });
+});
+</script>
+
+
 {% endblock content %}
