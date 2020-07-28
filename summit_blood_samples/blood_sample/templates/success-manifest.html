@@ -1,0 +1,20 @@
+{% load static %}
+<div class="site-content__main custom-modal-content">
+    <h3>3-Manifest Loaded</h3>
+    <div class="custom-form">
+        <h6 >File loaded: </h6>
+        <h6><img class="warning-svg" src="{% static 'indigo/images/correct.svg' %}" />  {{record_found_cnt}} matched</h6>
+        <h6><img class="warning-svg" src="{% static 'indigo/images/error.svg' %}" />  {{record_not_found_cnt}}  unmatched</h6>
+        <h6><img class="warning-svg" src="{% static 'indigo/images/error.svg' %}" />  {{duplicates_cnt}} duplicated</h6>
+    </div>
+    <div class="text-right bottom-buttons">
+        <button type="button" class="btn btn-submit" data-dismiss="modal">OK</button>
+    </div>
+</div>
+<style>
+.warning-svg{
+    width: 31px;
+    height: 25px;
+    margin-bottom: -6px;
+}
+</style>

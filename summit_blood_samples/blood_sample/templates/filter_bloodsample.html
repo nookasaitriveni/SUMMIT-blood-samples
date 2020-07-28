@@ -1,0 +1,51 @@
+<div id="filter_blood_sample" class="site-content__main custom-modal-content">
+    <h3>Filter Options</h3>
+    <form method="GET" class="post-form custom-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Dates">Date:</label>
+                <input type="date" id="Dates" data-date-format="dd/mm/yyyy" class="form__control"></input>
+                <label for="Sites">Site:</label>
+                <select name="Sites" id="Sites" class="form__control">
+                    <option value="">Please Select</option>
+                    {% for site in sites %}
+                    <option value="{{site}}">{{site}}</option>
+                    {% endfor %}
+                </select>
+                <label for="Rooms">Room:</label>
+                <select name="Rooms" id="Rooms" class="form__control">
+                    <option value="">Please Select</option>
+                    {% for room in rooms %}
+                    <option value="{{room}}">{{room}}</option>
+                    {% endfor %}
+                </select>
+                <label for="Visits">Visit:</label>
+                <select name="Visits" id="Visits" class="form__control">
+                    <option value="">Please Select</option>
+                    {% for visit in visits %}
+                    <option value="{{visit}}">{{visit}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+    </form>
+    <em class="error"></em>
+    <div class="text-right bottom-buttons">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-submit" id="filter-submit">Submit</button>
+    </div>
+</div>
+
+<script>
+    $('body').delegate('#filter-submit', 'click',function() {
+        $('.modal-loader').show();
+        $.ajax({
+            url: '/download_blood_sample?Date='+$('#Dates').val()+'&Site='+$('#Sites').val()+'&Room='+$('#Rooms').val()+'&Visit='+$('#Visits').val(),
+            type: 'GET',
+            success: function(data){
+                $('.modal-loader').hide();
+                $("#blood-sample-modal").modal('toggle');
+                $('#DownloadContainer').html(data);
+            }
+        });
+    });
+    </script>

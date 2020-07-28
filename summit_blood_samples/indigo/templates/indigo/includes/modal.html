@@ -1,0 +1,39 @@
+<div class="modal fade" id="blood-sample-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+      </div>
+      {% comment %} <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> {% endcomment %}
+    </div>
+  </div>
+</div>
+<style>
+.close{
+  min-width: 0;
+  padding: 0px 5px !important;
+  font-size: 30px;
+  top: 10px;
+  right: 20px;
+  z-index: 10;
+}
+.close:hover{
+  background: none;
+  border:none;
+  box-shadow:none;
+}
+</style>
+<script>
+$('#blood-sample-modal').on('hidden.bs.modal', function () {
+    $('.modal-loader').hide();
+});
+</script>

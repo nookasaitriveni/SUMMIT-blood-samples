@@ -1,0 +1,56 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+{% load indigo %}
+
+{% block title %}{{ title }} - Summit Blood Sample Adminstration{% endblock %}
+{% block extrahead %}
+
+<link rel="shortcut icon" href="{% indigo_static 'images/favicon.ico' %}" />
+<link rel="apple-touch-icon-precomposed" href="{% indigo_static 'favicon-152.png' %}">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="{% indigo_static 'favicon-144.png' %}">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+    font-family: 'Open Sans', sans-serif;
+    {% comment %} color: #444444 !important; {% endcomment %}
+}
+#content-related{
+    display:none;
+}
+#header, .module caption, div.breadcrumb, .breadcrumbs, #changelist-filter h2, .module  h2, input[type="submit"]{
+    background-color: #444 !important;
+    color: white !important;
+}
+{% comment %} input[type="submit"]{
+    color: white;
+} {% endcomment %}
+.dashboard #content {
+    width: 80%;
+}
+#content h1, .breadcrumbs{
+    display:none;
+}
+
+#admin-title{
+    color: #ff5a5f !important;
+}
+.sortable.column-role{
+    pointer-events: none;
+}
+#content-main{
+    margin-top:45px;
+}
+</style>
+{% endblock %}
+
+{% block branding %}
+    <div class="head">
+        <a href="{% url 'admin:auth_user_changelist' %}"><h1 id="admin-title">Blood Sample Adminstration</h1></a>
+    </div>
+{% endblock %}

@@ -1,0 +1,321 @@
+{% load static %}
+{% load indigo %}
+
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="en" class="lt-ie9 lt-ie8 no-js"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="lt-ie9 no-js"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  {% block meta %}
+    <meta charset=utf-8 />
+    <meta name="author" content="UCL" />
+    <meta name="description" content="UCL Homepage" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  {% endblock meta %}
+
+  {% block social_meta %}
+    <!-- social meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@uclnews">
+    <meta name="twitter:title" content="UCL - London's Global University">
+    <meta name="twitter:description" content="UCL (University College London) is London's leading multidisciplinary university, with 8,000 staff and 25,000 students.">
+    <meta name="twitter:creator" content="@UCLWAMS">
+    <meta name="twitter:image:src" content="http://www.ucl.ac.uk/visual-identity/logos/standalone.png">
+    <meta property="og:image" content="http://www.ucl.ac.uk/visual-identity/logos/standalone.png" />
+    <meta property="og:title" content="UCL - London's Global University" />
+    <meta property="og:url" content="http://www.ucl.ac.uk" />
+    <meta property="og:site_name" content="UCL" />
+    <meta property="og:description" content="UCL (University College London) is London's leading multidisciplinary university, with 8,000 staff and 25,000 students." />
+    <meta property="og:type" content="website" />
+    <meta property="og:profile_id" content="uclofficial" />
+    <!-- end social meta -->
+  {% endblock social_meta %}
+
+  <title>{% block page_title %}{{ request.site.name }}{% endblock page_title %}</title>
+
+  {% block styles %}
+    <!-- Bootstrap CSS -->
+    {% comment %} Refering this https://getbootstrap.com/docs/4.5/getting-started/introduction/ {% endcomment %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% comment %} <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"> {% endcomment %}
+    <link href="{% indigo_static 'css/screen.min.css' %}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'indigo/css/summit_blood_samples.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  {% endblock styles %}
+
+
+  {% block favicons %}
+    <link rel="shortcut icon" href="{% indigo_static 'images/favicon.ico' %}" />
+    <link rel="apple-touch-icon-precomposed" href="{% indigo_static 'favicon-152.png' %}">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="{% indigo_static 'favicon-144.png' %}">
+  {% endblock favicons %}
+
+  {% block head_scripts %}
+  {% comment %} <script src="{% indigo_static 'js/lib/modernizr-custom.js' %}"></script> {% endcomment %}
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+    <script>
+      var cuttingTheMustard = document.querySelector && window.localStorage && window.addEventListener;
+
+      Modernizr.load({
+        //cutting the mustard as used by the BBC
+        test: cuttingTheMustard
+        //if old browser load the shiv
+        ,
+        nope: [
+        '{% indigo_static "js/lib/html5shiv-printshiv.min.js" %}', '{% indigo_static "js/lib/respond.min.js" %}'
+        ]
+      });
+      //set conditional assets for main.js
+      var globalSiteSpecificVars = {
+        pathToJquery: '{% indigo_static "js/lib/jquery-1.9.1.min" %}',
+        googleAnalyticsIdsArray: [] //specify array of site specific id's NOT UCL generic UA-943297-1
+      }
+      if (cuttingTheMustard) {
+        globalSiteSpecificVars.pathToJquery = '{% indigo_static "js/lib/jquery-2.1.1.min" %}';
+      }
+    </script>
+  {% endblock head_scripts %}
+
+  {% block extra_head %}
+  {% endblock extra_head %}
+
+</head>
+
+<body id="{% block body_id %}{% endblock body_id %}" class="{% block body_class %}{% endblock body_class %}">
+  <header class="header header--desktop">
+
+  <a class="header__close" href="#">
+    <img src="{% indigo_static 'images/close.png' %}" alt="X" />Close</a>
+{% if user.is_authenticated %}
+  {% include "indigo/includes/global-masthead.html" %}
+{% endif %}
+  <div class="wrapper">
+
+    {% include "indigo/includes/ucl-banner.html" %}
+
+    <div class="sidebar">
+
+      <nav class="nav nav--mobile">
+        {% block nav_mobile_inner %}
+          <ul>
+            {% block nav_mobile_links %}
+            {% endblock nav_mobile_links %}
+          </ul>
+        {% endblock nav_mobile_inner %}
+      </nav>
+
+      <nav class="nav nav--left">
+        {% block nav_left_inner %}
+          <ul>
+            {% block nav_left_links %}
+            {% endblock nav_left_links %}
+          </ul>
+        {% endblock nav_left_inner %}
+      </nav>
+
+    </div>
+    <!-- end .sidebar -->
+
+    {% comment %} <nav class="nav nav--top">
+      {% block nav_top_inner %}
+        <ul>
+          {% block nav_top_links %}
+          {% endblock nav_top_links %}
+        </ul>
+      {% endblock nav_top_inner %}
+    </nav> {% endcomment %}
+
+  </div>
+  <!-- end .wrapper -->
+
+  </header>
+  <!-- end .header -->
+
+  <div class="site-content wrapper">
+
+    <header class="header header--mobile default-header">
+      <a class="header__open" href="#">
+        <img src="{% indigo_static 'images/ucl-menu.svg' %}" alt="Menu" />
+      </a>
+    </header>
+
+    <div class="site-content__inner clearfix" style="width: 105.8%">
+      <div class="site-content__body">
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li id="message_{{ forloop.counter }}"
+                class="message{% if message.tags %} message--{{ message.tags }}{% endif %}">
+                {% if message.tags == 'success' %}
+                  <i class="fa fa-check fa-lg fa-l"></i>
+                {% elif message.tags == 'info' %}
+                  <i class="fa fa-info-circle fa-lg fa-l"></i>
+                {% elif message.tags == 'warning' or message.tags == 'error' %}
+                  <i class="fa fa-exclamation-circle fa-lg fa-l"></i>
+                {% endif %}
+                {{ message }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% comment %} {% block breadcrumbs %}
+          <nav class="breadcrumb clearfix">
+            <ul class="breadcrumb__list">
+              {% block breadcrumb_links %}
+              {% endblock breadcrumb_links %}
+            </ul>
+          </nav>
+        {% endblock breadcrumbs %} {% endcomment %}
+
+        {% block content_body %}
+        {% endblock content_body %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- end .site-content -->
+  {% include "indigo/includes/modal.html" %}
+  {% include "indigo/includes/footer.html" %}
+  <svg class="modal-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+    <circle cx="170" cy="170" r="160" stroke="#ff5a5f"/>
+    <circle cx="170" cy="170" r="135" stroke="#615957"/>
+    <circle cx="170" cy="170" r="110" stroke="#ff5a5f"/>
+    <circle cx="170" cy="170" r="85" stroke="#615957"/>
+  </svg>
+  <style>
+
+
+.modal-loader {
+  max-width: 15rem;
+  width: 100%;
+  height: auto;
+  stroke-linecap: round;
+}
+
+circle {
+  fill: none;
+  stroke-width: 3.5;
+  -webkit-animation-name: preloader;
+          animation-name: preloader;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-transform-origin: 170px 170px;
+          transform-origin: 170px 170px;
+  will-change: transform;
+}
+circle:nth-of-type(1) {
+  stroke-dasharray: 550;
+}
+circle:nth-of-type(2) {
+  stroke-dasharray: 500;
+}
+circle:nth-of-type(3) {
+  stroke-dasharray: 450;
+}
+circle:nth-of-type(4) {
+  stroke-dasharray: 300;
+}
+circle:nth-of-type(1) {
+  -webkit-animation-delay: -0.15s;
+          animation-delay: -0.15s;
+}
+circle:nth-of-type(2) {
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s;
+}
+circle:nth-of-type(3) {
+  -webkit-animation-delay: -0.45s;
+  -moz-animation-delay:  -0.45s;
+          animation-delay: -0.45s;
+}
+circle:nth-of-type(4) {
+  -webkit-animation-delay: -0.6s;
+  -moz-animation-delay: -0.6s;
+          animation-delay: -0.6s;
+}
+
+@-webkit-keyframes preloader {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes preloader {
+  50% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+
+.modal-loader {
+  position: fixed;
+  z-index: 1450;
+  height: 9em;
+  width: 8em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.modal-loader:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 9em;
+  width: 8em;
+    background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+  background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+}
+</style>
+  {% comment %}
+  This is where django_debug_toolbar can inject its markup - it is important to do this before
+  requirejs is kicked off - debug toolbar messes around with define() and can cause loading
+  race conditions particularly on slow connections.
+
+  Setup as follows:
+
+  DEBUG_TOOLBAR_CONFIG = {
+      'INSERT_BEFORE': '<!-- DEBUG_TOOLBAR_PLACEHOLDER -->'
+  }
+  {% endcomment %}
+
+  <!-- DEBUG_TOOLBAR_PLACEHOLDER -->
+
+  {% block scripts %}
+
+    <script src="{% indigo_static 'js/lib/require.min.js' %}"></script>
+    <script src="{% indigo_static 'js/main.js' %}"></script>
+    <script>
+      $('.modal-loader').hide();
+      require.config({
+          baseUrl: '{% indigo_static "js/lib" %}'
+      });
+      {% block requirejs %}
+        require(["app/general", "app/searchWithAutoComplete", "app/tabs"]);//load the default stuff
+      {% endblock requirejs %}
+    </script>
+  {% endblock scripts %}
+</body>
+
+</html>

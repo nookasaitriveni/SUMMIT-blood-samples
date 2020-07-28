@@ -67,15 +67,19 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "whitenoise.runserver_nostatic",
     "crispy_forms",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
+    # "allauth",
+    # "allauth.account",
+    # "allauth.socialaccount",
     "rest_framework",
     "rest_framework.authtoken",
 ]
 
 LOCAL_APPS = [
-    "summit_blood_samples.users.apps.UsersConfig",
+    # "summit_blood_samples.users.apps.UsersConfig",
+    
+    "manage_users",
+    "blood_sample",
+    "indigo",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -89,16 +93,19 @@ MIGRATION_MODULES = {"sites": "summit_blood_samples.contrib.sites.migrations"}
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
+# AUTHENTICATION_BACKENDS = [
+#     "django.contrib.auth.backends.ModelBackend",
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "users.User"
+# AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
+# LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+# LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_URL = '/accounts/login/'
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -132,7 +139,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.common.BrokenLinkEmailsMiddleware",
+    # "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -158,6 +165,7 @@ MEDIA_ROOT = str(APPS_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
 
+UPLOAD_ROOT = str(ROOT_DIR / "uploads")
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
@@ -166,7 +174,7 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        "DIRS": [str(APPS_DIR / "templates")],
+        "DIRS": [str(ROOT_DIR / 'templates'), str(APPS_DIR / "templates")],
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
@@ -215,20 +223,35 @@ X_FRAME_OPTIONS = "DENY"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
-)
+# EMAIL_BACKEND = env(
+#     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+# )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
-EMAIL_TIMEOUT = 5
+# EMAIL_TIMEOUT = 5
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail01.valuelabs.com'
+
+
+EMAIL_HOST_USER = 'krishna.n@valuelabs.com'
+
+EMAIL_HOST_PASSWORD = 'Jul@2020'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_FROM = 'Summit Blood Samples <krishna.n@valuelabs.com>'
+DEFAULT_FROM_EMAIL = 'Summit Blood Samples <krishna.n@valuelabs.com>'
+
 
 # ADMIN
 # ------------------------------------------------------------------------------
-# Django Admin URL.
-ADMIN_URL = "admin/"
-# https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Daniel Roy Greenfeld""", "daniel-roy-greenfeld@example.com")]
-# https://docs.djangoproject.com/en/dev/ref/settings/#managers
-MANAGERS = ADMINS
+# # Django Admin URL.
+# ADMIN_URL = "admin/"
+# # https://docs.djangoproject.com/en/dev/ref/settings/#admins
+# ADMINS = [("""Daniel Roy Greenfeld""", "daniel-roy-greenfeld@example.com")]
+# # https://docs.djangoproject.com/en/dev/ref/settings/#managers
+# MANAGERS = ADMINS
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -255,19 +278,19 @@ LOGGING = {
 }
 
 
-# django-allauth
-# ------------------------------------------------------------------------------
-ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_AUTHENTICATION_METHOD = "username"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_REQUIRED = True
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "summit_blood_samples.users.adapters.AccountAdapter"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "summit_blood_samples.users.adapters.SocialAccountAdapter"
+# # django-allauth
+# # ------------------------------------------------------------------------------
+# ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+# # https://django-allauth.readthedocs.io/en/latest/configuration.html
+# ACCOUNT_AUTHENTICATION_METHOD = "username"
+# # https://django-allauth.readthedocs.io/en/latest/configuration.html
+# ACCOUNT_EMAIL_REQUIRED = True
+# # https://django-allauth.readthedocs.io/en/latest/configuration.html
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# # https://django-allauth.readthedocs.io/en/latest/configuration.html
+# ACCOUNT_ADAPTER = "summit_blood_samples.users.adapters.AccountAdapter"
+# # https://django-allauth.readthedocs.io/en/latest/configuration.html
+# SOCIALACCOUNT_ADAPTER = "summit_blood_samples.users.adapters.SocialAccountAdapter"
 
 # django-rest-framework
 # -------------------------------------------------------------------------------

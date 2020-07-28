@@ -1,0 +1,27 @@
+
+<button type="button" class="btn custom-btn dwnblood" id="downloadbloodSample">Blood Sample</button>
+<button type="button" class="btn custom-btn Aliquotsdwn" id="downloadAliquots">Aliquots</button>
+<div id='DownloadContainer'></div>
+<script  type="text/javascript">
+$(document).ready(function(){
+$('.dwnblood').click(function() {
+    $.ajax({
+        url: '/download_blood_sample',
+        type: 'GET',
+        success: function(data){
+                $('#DownloadContainer').html(data);
+            }
+    });
+});
+
+$('.Aliquotsdwn').click(function() {
+    $.ajax({
+        url: '/download_aliquots',
+        type: 'GET',
+        success: function(data){
+                $('#DownloadContainer').html(data);
+            }
+    });
+});
+});
+</script>
