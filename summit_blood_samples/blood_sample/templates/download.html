@@ -4,24 +4,26 @@
 <div id='DownloadContainer'></div>
 <script  type="text/javascript">
 $(document).ready(function(){
-$('.dwnblood').click(function() {
-    $.ajax({
-        url: '/download_blood_sample',
-        type: 'GET',
-        success: function(data){
-                $('#DownloadContainer').html(data);
-            }
+    $('.dwnblood').click(function() {
+        $.ajax({
+            url: '/download_blood_sample?BloodSample=id,CohortId,Comments,State&Manifest=Visit,Site,Room,Barcode&Receipt=SampleId,Clinic&Processed=TissueSubType&DateFrom=&DateTo=&Site=&Room=&State=&Visit=',
+            type: 'GET',
+            success: function(data){
+                    $('#DownloadContainer').html(data);
+                }
+        });
     });
-});
 
-$('.Aliquotsdwn').click(function() {
-    $.ajax({
-        url: '/download_aliquots',
-        type: 'GET',
-        success: function(data){
-                $('#DownloadContainer').html(data);
-            }
+    $('.Aliquotsdwn').click(function() {
+        $.ajax({
+            url: '/download_aliquots',
+            type: 'GET',
+            success: function(data){
+                    $('#DownloadContainer').html(data);
+                }
+        });
     });
-});
+
+    $('#downloadbloodSample').click();
 });
 </script>

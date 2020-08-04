@@ -40,7 +40,7 @@
   <div id="upload-container">
   </div>
   </div>
-  <div class="tab-pane fade show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">Comming Soon!</div>
+  <div class="tab-pane fade show" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">{% include 'review-tab.html' %}</div>
   <div class="tab-pane fade show" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">{% include 'download.html' %}</div>
   <div class="tab-pane fade show" id="nav-report" role="tabpanel" aria-labelledby="nav-report-tab">Comming Soon!</div>
 </div>
@@ -61,7 +61,7 @@ $(document).ready(function(){
             }
         });
     }
-    $('body').delegate('.day', 'click',function() {
+    $('body').delegate('.uploadDay', 'click',function() {
         $(".md-step").addClass("active");
         $(this).removeClass("active");
         getUpload($(this).data('currentday'));

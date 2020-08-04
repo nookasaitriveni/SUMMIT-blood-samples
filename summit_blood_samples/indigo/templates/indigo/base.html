@@ -58,6 +58,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+<!--TWBS Paginator-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 
     <script>
       var cuttingTheMustard = document.querySelector && window.localStorage && window.addEventListener;
@@ -183,6 +186,7 @@
 
   <!-- end .site-content -->
   {% include "indigo/includes/modal.html" %}
+  {% include 'indigo/twbsPagination.html' %}
   {% include "indigo/includes/footer.html" %}
   <svg class="modal-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
     <circle cx="170" cy="170" r="160" stroke="#ff5a5f"/>
@@ -308,6 +312,7 @@ circle:nth-of-type(4) {
     <script src="{% indigo_static 'js/main.js' %}"></script>
     <script>
       $('.modal-loader').hide();
+      
       require.config({
           baseUrl: '{% indigo_static "js/lib" %}'
       });
@@ -315,6 +320,7 @@ circle:nth-of-type(4) {
         require(["app/general", "app/searchWithAutoComplete", "app/tabs"]);//load the default stuff
       {% endblock requirejs %}
     </script>
+
   {% endblock scripts %}
 </body>
 

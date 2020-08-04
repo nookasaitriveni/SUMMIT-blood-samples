@@ -1,29 +1,78 @@
 <div id="filter_blood_sample" class="site-content__main custom-modal-content">
     <h3>Filter Options</h3>
+    <style>
+    #DateFrom, #DateTo{
+        position: relative;
+    }
+        #DateFrom::-webkit-calendar-picker-indicator, #DateTo::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+    </style>
     <form method="GET" class="post-form custom-form">
             {% csrf_token %}
             <div class="form-group">
-                <label for="Dates">Date:</label>
-                <input type="date" id="Dates" data-date-format="dd/mm/yyyy" class="form__control"></input>
+                <div class="row">
+                    <div class="col">
+                        <label for="DateFrom">Date From:</label>
+                        <input type="date" value="{{from}}" id="DateFrom" data-date-format="dd/mm/yyyy" class="form__control"></input>
+                        <em class="date_error"></em>
+                    </div>
+                    <div class="col">
+                        <label for="DateTo">Date To:</label>
+                        <input type="date" id="DateTo" value="{{to}}" data-date-format="dd/mm/yyyy" class="form__control"></input>
+                    </div>
+                </div>
                 <label for="Sites">Site:</label>
                 <select name="Sites" id="Sites" class="form__control">
                     <option value="">Please Select</option>
                     {% for site in sites %}
+                    {% if site in filters.Site %}
+                    <option value="{{site}}" selected>{{site}}</option>
+                    {% else %}
                     <option value="{{site}}">{{site}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <label for="Rooms">Room:</label>
                 <select name="Rooms" id="Rooms" class="form__control">
                     <option value="">Please Select</option>
                     {% for room in rooms %}
+                    {% if room in filters.Room %}
+                    <option value="{{room}}" selected>{{room}}</option>
+                    {% else %}
                     <option value="{{room}}">{{room}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <label for="Visits">Visit:</label>
                 <select name="Visits" id="Visits" class="form__control">
                     <option value="">Please Select</option>
                     {% for visit in visits %}
+                    {% if visit in filters.Visit %}
+                    <option value="{{visit}}" selected>{{visit}}</option>
+                    {% else %}
                     <option value="{{visit}}">{{visit}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <label for="State">State:</label>
+                <select name="State" id="State" class="form__control">
+                    <option value="">Please Select</option>
+                    {% for state in states %}
+                    {% if state in filters.State %}
+                    <option value="{{state}}" selected>{{state}}</option>
+                    {% else %}
+                    <option value="{{state}}">{{state}}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -31,19 +80,24 @@
     <em class="error"></em>
     <div class="text-right bottom-buttons">
         <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-submit" id="filter-submit">Submit</button>
+        <button type="button" class="btn btn-submit" data-dismiss="modal" id="filter-submit">Submit</button>
     </div>
 </div>
 
 <script>
-    $('body').delegate('#filter-submit', 'click',function() {
-        $('.modal-loader').show();
+    var settings = "{{settings|safe}}";
+    $('#filter-submit').click(function() {
+        if (new Date($('#DateFrom').val()) > new Date($('#DateTo').val())){
+            $('.date_error').html("from date must be greaterthan to date");
+            alert('from date must be greaterthan to date');
+            return
+        }
         $.ajax({
-            url: '/download_blood_sample?Date='+$('#Dates').val()+'&Site='+$('#Sites').val()+'&Room='+$('#Rooms').val()+'&Visit='+$('#Visits').val(),
+            url: '/download_blood_sample?DateFrom='+$('#DateFrom').val()+'&DateTo='+$('#DateTo').val()+'&Site='+$('#Sites').val()+'&Room='+$('#Rooms').val()+'&Visit='+$('#Visits').val()+'&State='+$('#State').val()+'&settings='+settings,
             type: 'GET',
             success: function(data){
                 $('.modal-loader').hide();
-                $("#blood-sample-modal").modal('toggle');
+                // $("#blood-sample-modal").modal('toggle');
                 $('#DownloadContainer').html(data);
             }
         });

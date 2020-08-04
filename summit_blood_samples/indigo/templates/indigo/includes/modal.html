@@ -1,5 +1,5 @@
-<div class="modal fade" id="blood-sample-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="blood-sample-modal" tabindex="-1" role="dialog" aria-labelledby="blood-sample-summit" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable customModal">
     <div class="modal-content">
       <div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -31,9 +31,14 @@
   border:none;
   box-shadow:none;
 }
+.modal-body {
+    padding: 3rem 1rem;
+}
 </style>
 <script>
 $('#blood-sample-modal').on('hidden.bs.modal', function () {
     $('.modal-loader').hide();
+    $(".customModal").removeClass("modal-xl");
+    $(".modal-body").html("");
 });
 </script>

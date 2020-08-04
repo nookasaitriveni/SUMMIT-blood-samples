@@ -1,0 +1,52 @@
+{% now "d b" as todays_date %}
+
+<div class="site-content__main custom-modal-content review-manifest">
+    <h3>Review - Manifest</h3>
+        {% include "day-nav.html" %}
+        <style>
+        .reviewManifestDay-container{
+            padding: 0px 110px;
+            margin-bottom: -40px;
+            margin-top: -30px;
+        }
+        .reviewManifestDay:hover{
+            background: none !important;
+        }
+
+        </style>
+    <div class="custom-form">
+        <div id="manifest_table"></div>
+        <div id="pagination_manifest" class="pagination-md pull-right"></div></br>
+    </div>
+    <em class="error"></em>
+    {% if navigation != True %}
+        <div class="text-right bottom-buttons">
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+        </div>
+    {% endif %}
+</div>
+<div class="site-content__main custom-modal-content edit-manifest-div">
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        window.navigation="{{navigation}}";
+        twbsPaginator("#pagination_manifest", "#manifest_table", "{{current_page}}", "{{total_pages}}",
+        '/review?table=True&type=manifest&day='+$('.reviewManifestDay.activeDay').data('activeday')+'&page=');
+        function getNav(day){
+            $('.modal-loader').show();
+            $.ajax({
+                url: '/review?type=manifest&day='+day,
+                type: 'get',
+                success: function(data){
+                    $('.modal-body').html(data);
+                    $('.modal-loader').hide();
+                }
+            });
+        }
+        $('.reviewManifestDay').click(function() {
+            $(".md-step").addClass("active");
+            $(this).removeClass("active");
+            getNav($(this).data('currentday'));
+    });
+    });
+</script>

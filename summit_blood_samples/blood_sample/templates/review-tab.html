@@ -1,0 +1,62 @@
+<div style="padding: 20px 100px;">
+	<!-- completed -->
+	<div class="step completed">
+		<div class="v-stepper">
+			<div class="circle"></div>
+			<div class="line"></div>
+		</div>
+
+		<div class="step-content">
+			<button type="button" style="margin: 0px 43px;" data-review="blood_sample" class="btn custom-btn reviewBtnTab" id="bloodSample-tab" >Blood Sample</button>
+		</div>
+	</div>
+	<div class="step completed">
+		<div class="v-stepper">
+		<div class="circle"></div>
+		<div class="line"></div>
+		</div>
+		<div class="step-content">
+		<button type="button" style="margin: 0px 43px;" data-review="manifest" class="btn custom-btn reviewBtnTab" id="manifest-tab">Manifest</button>
+		</div>
+	</div>
+    <div class="step completed">
+		<div class="v-stepper">
+		<div class="circle"></div>
+		<div class="line"></div>
+		</div>
+		<div class="step-content">
+		<button type="button" style="margin: 0px 43px;" data-review="receipt" class="btn custom-btn reviewBtnTab" id="receipt-tab">Receipt</button>
+		</div>
+	</div>
+    <div class="step completed">
+		<div class="v-stepper">
+		<div class="circle"></div>
+		<div class="line"></div>
+		</div>
+		<div class="step-content">
+		<button type="button" style="margin: 0px 43px;" data-review="processed" class="btn custom-btn reviewBtnTab" id="processed-tab">Processed</button>
+		</div>
+	</div>
+</div>
+<style>
+.step-content{
+	margin-top: -6px;
+}
+</style>
+<script>
+$(document).ready(function(){
+    $('.reviewBtnTab').click(function() {
+		$('.modal-loader').show();
+		$("#blood-sample-modal").modal();
+		$(".customModal").addClass("modal-xl");
+		$.ajax({
+            url: '/review?firstOpen=True&type='+$(this).data('review'),
+            type: 'get',
+            success: function(data){
+                $('.modal-body').html(data);
+				$('.modal-loader').hide();
+            }
+        });
+	});
+});
+</script>

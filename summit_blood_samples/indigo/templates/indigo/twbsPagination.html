@@ -1,0 +1,120 @@
+<script>
+function twbsPaginator(paginator_div_id, div_id, current_page, total_pages, url){
+    $(paginator_div_id).empty();
+    $(paginator_div_id).removeData("twbs-pagination");
+    window.total_pages=total_pages;
+    window.page=current_page;
+    $(paginator_div_id).unbind("page");
+    $(paginator_div_id).twbsPagination({
+        totalPages: total_pages,
+        // the current page that show on start
+        startPage: parseInt(window.page),
+    
+        // maximum visible pages
+        visiblePages: 7,
+
+        initiateStartPageClick: true,
+
+        // template for pagination links
+        href: false,
+
+        // variable name in href template for page number
+        hrefVariable: '{{number}}',
+        //This hides all control buttons if it has one page 
+        hideOnlyOnePage:true,
+        // variable name in href template for page number
+        hrefVariable: current_page,
+
+        // Text labels
+        first: 'First',
+        prev: 'Previous',
+        next: 'Next',
+        last: 'Last',
+
+        // carousel-style pagination
+        loop: false,
+        //onPageClick: null,
+        // callback function
+        
+        //$('.page'+current_page).addClass('page-active');
+        onPageClick: function (event, page) {
+            //$('.page-active').removeClass('page-active');
+            //$('#page'+page).addClass('page-active');
+            $('.modal-loader').show();
+            var that = $(this);
+            var t;
+            window.page=page;
+            $.ajax({
+                url: url + page,
+                type: 'GET',
+                success: function(response) {
+                    if(response=='')
+                    {
+                        $('.modal-loader').hide();
+                    }
+                    $(div_id).html('');
+                    $(div_id).html(response);
+                    $('.modal-loader').hide();
+                }
+            });
+    
+        },
+
+        // pagination Classes
+        paginationClass: 'pagination',
+        nextClass: 'next',
+        prevClass: 'prev',
+        lastClass: 'last',
+        firstClass: 'first',
+        pageClass: 'page',
+        activeClass: 'active',
+        disabledClass: 'disabled'
+
+    });
+}
+</script>
+<style>
+.page.active {
+  display: block;
+}
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.page.active a {
+  background-color: #ff5a5f;
+  color: white;
+}
+.pagination li.prev a:hover {
+  background-color: #ff5a5f;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.first a:hover {
+  background-color: #ff5a5f;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.page a:hover {
+  background-color: #ff5a5f;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.next a:hover {
+  background-color: #ff5a5f;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li.last a:hover {
+  background-color: #ff5a5f;
+  color: white;
+  transition: background-color .3s;
+}
+.pagination li{
+    padding: 0;
+    margin-right: 0;
+}
+</style>
