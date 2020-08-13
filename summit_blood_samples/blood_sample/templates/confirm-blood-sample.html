@@ -19,7 +19,7 @@ $(document).ready(function(){
         var form_data = new FormData();
         form_data.append('file', file_data);
         $.ajax({
-            url: 'upload_blood_sample?confirm=True',
+            url: 'upload_blood_sample?confirm=True&day='+$('.activeDay').data('currentday'),
             data: form_data,
             type: 'POST',
             processData: false,
@@ -30,7 +30,7 @@ $(document).ready(function(){
             success: function(data){
                 if (data.status==undefined){
                     $('.modal-body').html(data);
-                    getUpload();
+                    getUpload($('.activeDay').data('currentday'));
                     function getUpload(day){
                         $('.modal-loader').show();
                         $.ajax({
@@ -46,15 +46,18 @@ $(document).ready(function(){
                     message = data.message
                     $('#error').html(message);
                 }
+                $('.btn-cancel').prop("disabled", false);
+                $('.btn-submit').prop("disabled", false);
                 $('.modal-loader').hide();
             },
             error: function (error) {
                 $('.modal-loader').hide();
                 $('.error').html("Internal server error encountered");
+                $('.btn-cancel').prop("disabled", false);
+                $('.btn-submit').prop("disabled", false);
             }
         });
-        $('.btn-cancel').prop("disabled", false);
-        $('.btn-submit').prop("disabled", false);
+
     });
 
 });

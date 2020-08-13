@@ -20,16 +20,15 @@
 
 </style>
 <script>
-$('body').delegate('#upload', 'click',function() {
-    $('.btn-cancel').prop("disabled", true);
-    $('.btn-submit').prop("disabled", true);
+$('#upload').click(function() {
     if ($('#bloodsamplefile').prop('files').length ===0){
         $('.error').html("Please upload a Blood Sample");
         $('.btn-cancel').prop("disabled", false);
         $('.btn-submit').prop("disabled", false);
         return
     }
-
+    $('.btn-cancel').prop("disabled", true);
+    $('.btn-submit').prop("disabled", true);
     var file_data = $('#bloodsamplefile').prop('files')[0];
     if (file_data.name.split('.').slice(-1)[0]!=='csv'){
         $('.error').html("Please upload a Blood Sample with CSV format");
