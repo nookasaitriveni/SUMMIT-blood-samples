@@ -39,6 +39,16 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
+  pgadmin:
+    build:
+      context: .
+      dockerfile: ./compose/production/pgadmin/Dockerfile
+    image: summit_blood_samples_production_pgadmin
+    env_file:
+      - ./.envs/.production/.pgadmin
+    depends_on:
+      - postgres
+
   nginx:
     build:
       context: .
@@ -47,6 +57,7 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
+      - "0.0.0.0:2345:2345"
     volumes:
       - type: bind
         source: ./compose/production/nginx/conf.d
@@ -62,3 +73,4 @@ services:
         target: /static
     depends_on:
       - django
+      - pgadmin
